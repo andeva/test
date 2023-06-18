@@ -7,5 +7,14 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo 'Hello, World!'
-  displayName: 'Print Hello World'
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: 'inde.html'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'webapp'
